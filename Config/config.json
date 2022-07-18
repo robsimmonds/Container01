@@ -1,0 +1,63 @@
+{
+    "$schema": "./config_schema.json",
+    "authProviders": {
+        "ldap": {
+            "publicKeyLocation": "/etc/carta/carta_public.pem",
+            "privateKeyLocation": "/etc/carta/carta_private.pem",
+            "issuer": "carta_testing",
+            "ldapOptions": {
+                "url": "ldap://ldapinternal.ilifu.ac.za:389",
+                "searchBase": "dc=ilifu,dc=ac,dc=za",
+                "searchFilter": "uid={{username}}",
+                "starttls": true,
+                "reconnect": true
+            }
+        }
+    },
+    "database": {
+        "uri": "mongodb://localhost:27017",
+        "databaseName": "CARTA"
+    },
+    "serverAddress": "https://carta-beta.idia.ac.za",
+    "processCommand": "/usr/bin/carta_backend",
+    "killCommand": "/usr/bin/carta-kill-script",
+    "rootFolderTemplate": "/carta_root",
+    "baseFolderTemplate": "/carta_root/carta_share/users/{username}",
+    "startDelay": 1000,
+    "dashboard": {
+ubuntu@carta-beta:/etc/carta$ more config.json 
+{
+    "$schema": "./config_schema.json",
+    "authProviders": {
+        "ldap": {
+            "publicKeyLocation": "/etc/carta/carta_public.pem",
+            "privateKeyLocation": "/etc/carta/carta_private.pem",
+            "issuer": "carta_testing",
+            "ldapOptions": {
+                "url": "ldap://ldapinternal.ilifu.ac.za:389",
+                "searchBase": "dc=ilifu,dc=ac,dc=za",
+                "searchFilter": "uid={{username}}",
+                "starttls": true,
+                "reconnect": true
+            }
+        }
+    },
+    "database": {
+        "uri": "mongodb://localhost:27017",
+        "databaseName": "CARTA"
+    },
+    "serverAddress": "https://carta-beta.idia.ac.za",
+    "processCommand": "/usr/bin/carta_backend",
+    "killCommand": "/usr/bin/carta-kill-script",
+    "rootFolderTemplate": "/carta_root",
+    "baseFolderTemplate": "/carta_root/carta_share/users/{username}",
+    "startDelay": 1000,
+    "dashboard": {
+        "bannerImage": "/etc/carta/idia_banner.svg",
+        "bannerColor": "#d2dce5",
+        "infoText": "Welcome to the IDIA CARTA server.",
+        "loginText": "Please enter your ilifu login credentials:",
+        "footerText": "<span>If you have problems accessing the IDIA CARTA server, please contact <a href='mailto: support@ilifu.ac.za'>il
+ifu support</a>.</span>"
+    }
+}
