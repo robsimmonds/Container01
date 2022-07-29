@@ -49,9 +49,7 @@ RUN \
 
 # need to install config scripts.
 RUN \
-    apt install -y git && \
-     git clone https://github.com/robsimmonds/Container01.git && \
-     cd Container01/Config && \
+     cd Config && \
      cp config.json /etc/carta && \
      cp carta_sudo /etc/sudoers.d && \
      cp idia_banner.svg /etc/carta;
