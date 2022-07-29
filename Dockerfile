@@ -15,6 +15,7 @@ RUN \
 # add 'carta' user to the shadow group (only required for PAM UNIX authentication)
     apt install curl -y && \
     usermod -a -G shadow carta && \
+    apt install sudo -y && \
  \
 # log directory owned by carta
     mkdir -p /var/log/carta && \
@@ -57,7 +58,7 @@ RUN \
 
 RUN \
     groupadd carta-users && \
-    useradd  --shell=/bin/bash -D -p "cartatest999" cartatest -G carta-users
+    useradd  -D --shell=/bin/bash -p "cartatest999" cartatest -G carta-users
 
 # think about the UID of a carta user in the inderlying system. This could cause problems. ****
 
