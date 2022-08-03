@@ -34,12 +34,10 @@ RUN \
 # Install carta-controller (includes frontend config)
     npm install --location=global --unsafe-perm carta-controller@beta && \
 \
+    apt install mongodb -y && \
+\
 # Install PM2 node service
-    npm install --location=global pm2
-
-# Switch to carta user
-RUN \
-    su - carta && \
+    npm install --location=global pm2 && \
 \
 # Generate private/public keys
     mkdir -p /etc/carta && \
@@ -47,16 +45,15 @@ RUN \
     openssl genrsa -out carta_private.pem 4096 && \
     openssl rsa -in carta_private.pem -outform PEM -pubout -out carta_public.pem
 
-# need to install config scripts.
-RUN \
-     cd Config && \
-     cp config.json /etc/carta && \
-     cp carta_sudo /etc/sudoers.d && \
-     cp idia_banner.svg /etc/carta;
-
 RUN \
     groupadd carta-users && \
-    useradd  -D --shell=/bin/bash -p "cartatest999" cartatest -G carta-users
+    useradd  -m --shell=/bin/bash -p "cartatest999" -G carta-users cartatest
+
+
+COPY Config/config.json /etc/carta/
+COPY Config/carta_sudo /etc/sudoers.d/
+COPY Config/idia_banner.svg /etc/carta/
+COPY Config/start.sh /usr/local/bin/
 
 # think about the UID of a carta user in the inderlying system. This could cause problems. ****
 
@@ -65,8 +62,10 @@ RUN \
 # need to think how to mount data volume into this contrainer.
 
 RUN \
-    apt install mongodb -y
+#    service mongodb start && \
+    chmod +x /usr/local/bin/start.sh
 
 EXPOSE 8000
 
-CMD ["sh","-c","service mongodb start; sudo su carta; pm2 start --no-daemon carta-controller"]
+CMD ["/usr/local/bin/start.sh"]
+
